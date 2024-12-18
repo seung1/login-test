@@ -3,28 +3,24 @@
 import { authStore } from "@/store/authStore";
 import app from "@/utils/firebase";
 import { Box, Button, Skeleton, Typography } from "@mui/material";
-import {
-  getAuth,
-  GoogleAuthProvider,
-  onAuthStateChanged,
-  signInWithPopup,
-  signOut,
-} from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useEffect, useMemo, useState } from "react";
+import CustomPaper from "./CustomPaper";
+import { useRouter } from "next/navigation";
+import useLogin from "@/utils/useLogin";
 
 const LoginBanner = () => {
   const { user, setUser } = authStore();
+
+  const { tryLogin } = useLogin();
+
+  const { push } = useRouter();
 
   const [loading, setLoading] = useState(true);
 
   const isLogin = useMemo(() => user !== null, [user]);
 
   const auth = getAuth(app);
-
-  const provider = new GoogleAuthProvider();
-  provider.setCustomParameters({
-    prompt: "select_account", // 계정 선택을 항상 강제
-  });
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -35,36 +31,10 @@ const LoginBanner = () => {
     return () => {
       unsubscribe();
     };
-  }, [auth, setUser]);
-
-  const tryLogin = () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        setUser(result.user);
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-
-        console.error(errorCode, errorMessage, email, credential);
-      });
-  };
+  }, [auth, push, setUser]);
 
   return (
-    <Box
-      sx={{
-        border: "2px solid black",
-        borderRadius: 2,
-        p: 2,
-        minWidth: "500px",
-      }}
-    >
+    <CustomPaper>
       <Typography variant="body1" sx={{ fontWeight: "bold", mb: 2 }}>
         로그인 정보
       </Typography>
@@ -81,7 +51,7 @@ const LoginBanner = () => {
           }}
         >
           <Typography variant="body1">
-            현재 로그인중인 유저: {user?.displayName}
+            유저이름 : {user?.displayName}
           </Typography>
 
           <Button
@@ -100,7 +70,7 @@ const LoginBanner = () => {
           </Button>
         </Box>
       )}
-    </Box>
+    </CustomPaper>
   );
 };
 

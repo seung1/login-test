@@ -23,14 +23,21 @@ export default function RootLayout({
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            justifyContent: "center",
             minHeight: "100vh",
+            px: 1,
+            pt: 5,
+
+            width: "100%",
+            maxWidth: "500px",
+            mx: "auto",
           }}
         >
           <LoginBanner />
           <PageButtonList />
 
-          <Box sx={{ minHeight: "400px" }}>{children}</Box>
+          <Box sx={{ minHeight: "400px", py: 3, width: "100%" }}>
+            <main>{children}</main>
+          </Box>
         </Box>
       </body>
     </html>
