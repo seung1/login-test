@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import LoginBanner from "@/components/LoginBanner";
 import { Box } from "@mui/material";
+
+import LoginBanner from "@/components/LoginBanner";
+import PageButtonList from "@/components/PageButtonList";
 
 export const metadata: Metadata = {
   title: "로그인 프로젝트",
@@ -26,6 +28,7 @@ export default function RootLayout({
           }}
         >
           <LoginBanner />
+          <PageButtonList />
 
           <Box sx={{ minHeight: "400px" }}>{children}</Box>
         </Box>
