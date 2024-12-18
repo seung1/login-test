@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import styles from "../page.module.css";
 import {
   getAuth,
   signInWithPopup,
@@ -42,8 +41,8 @@ export default function Login() {
   };
 
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
+    <div>
+      <main>
         <Link href="/">메인 페이지로 이동</Link>
 
         <h3>로그인 페이지</h3>

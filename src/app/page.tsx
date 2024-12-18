@@ -1,10 +1,9 @@
 import Link from "next/link";
-import styles from "./page.module.css";
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
+    <div>
+      <main>
         <h3>로그인 프로젝트 목표</h3>
         <ol>
           <li>소셜 로그인 구현</li>
