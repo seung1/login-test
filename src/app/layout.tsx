@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import CurrentLoginUser from "@/components/CurrentLoginUser";
+import LoginBanner from "@/components/LoginBanner";
 import { Box } from "@mui/material";
 
 export const metadata: Metadata = {
@@ -25,7 +25,8 @@ export default function RootLayout({
             minHeight: "100vh",
           }}
         >
-          <CurrentLoginUser />
+          <LoginBanner />
+
           <Box sx={{ minHeight: "400px" }}>{children}</Box>
         </Box>
       </body>
