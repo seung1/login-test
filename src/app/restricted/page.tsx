@@ -13,9 +13,7 @@ export default function Restricted() {
   const { tryLogin } = useLogin();
 
   useEffect(() => {
-    if (user) {
-      push("/privacy");
-    }
+    if (user) push("/privacy");
   }, [user, push]);
 
   return (

@@ -12,13 +12,13 @@ import {
 } from "firebase/auth";
 
 export default function Privacy() {
-  const { user, setUser } = authStore();
+  const { user, setUser, isLoading } = authStore();
   const { push } = useRouter();
   const pathName = usePathname();
 
   useEffect(() => {
-    if (pathName === "/privacy" && !user) push("/");
-  }, [pathName, push, user]);
+    if (!isLoading && pathName === "/privacy" && !user) push("/");
+  }, [isLoading, pathName, push, user]);
 
   // ! 계정 삭제말고 구글 연결 해제하는 방법 추가 필요!
   // const revokeGoogleAccess = async (token: string) => {

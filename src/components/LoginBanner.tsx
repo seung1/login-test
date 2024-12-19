@@ -4,19 +4,17 @@ import { authStore } from "@/store/authStore";
 import app from "@/utils/firebase";
 import { Box, Button, Skeleton, Typography } from "@mui/material";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import CustomPaper from "./CustomPaper";
 import { useRouter } from "next/navigation";
 import useLogin from "@/utils/useLogin";
 
 const LoginBanner = () => {
-  const { user, setUser } = authStore();
+  const { user, setUser, isLoading, setIsLoading } = authStore();
 
   const { tryLogin } = useLogin();
 
   const { push } = useRouter();
-
-  const [loading, setLoading] = useState(true);
 
   const isLogin = useMemo(() => user !== null, [user]);
 
@@ -25,13 +23,13 @@ const LoginBanner = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user || null);
-      setLoading(false);
+      setIsLoading(false);
     });
 
     return () => {
       unsubscribe();
     };
-  }, [auth, push, setUser]);
+  }, [auth, push, setUser, setIsLoading]);
 
   return (
     <CustomPaper>
@@ -39,7 +37,7 @@ const LoginBanner = () => {
         로그인 정보
       </Typography>
 
-      {loading ? (
+      {isLoading ? (
         <Skeleton variant="rounded" sx={{ height: "40px" }} />
       ) : (
         <Box
